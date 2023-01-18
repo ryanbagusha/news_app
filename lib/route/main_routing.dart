@@ -16,12 +16,14 @@ class MainRouting extends StatelessWidget {
       title: "Home",
       initialRoute: '/bottom_navbar',
       routes: {
-        '/home' :(context) => HomePage(),
-        '/profile' :(context) => ProfilePage(),
-        '/login' :(context) => LoginPage(),
-        '/bottom_navbar' :(context) => BottomNavbar(),
+        '/home': (context) => HomePage(),
+        '/profile': (context) => ProfilePage(),
+        '/login': (context) => LoginPage(),
+        '/bottom_navbar': (context) => BottomNavbar(),
       },
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
     );
   }
-
 }
