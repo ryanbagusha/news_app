@@ -20,7 +20,9 @@ class MainRouting extends StatelessWidget {
         '/bottom_navbar': (context) => BottomNavbar(),
       },
       theme: ThemeData(
+        fontFamily: "Montserrat",
         primarySwatch: Colors.blueGrey,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
   }
