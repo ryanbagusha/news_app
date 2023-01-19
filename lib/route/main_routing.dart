@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news/bottom_navbar/bottom_navbar.dart';
 import 'package:news/login/login_page.dart';
-import 'package:news/profile/profile-page.dart';
+import 'package:news/main_page/profile/profile-page.dart';
 
-import '../home/home-page.dart';
+import '../main_page/home/home-page.dart';
 
 class MainRouting extends StatelessWidget {
   const MainRouting({super.key});
@@ -16,13 +16,11 @@ class MainRouting extends StatelessWidget {
       title: "Home",
       initialRoute: '/bottom_navbar',
       routes: {
-        '/home': (context) => HomePage(),
-        '/profile': (context) => ProfilePage(),
         '/login': (context) => LoginPage(),
         '/bottom_navbar': (context) => BottomNavbar(),
       },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.blueGrey,
       ),
     );
   }

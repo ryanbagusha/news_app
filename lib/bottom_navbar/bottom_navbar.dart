@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news/home/home-page.dart';
-import 'package:news/profile/profile-page.dart';
+import 'package:news/main_page/relasi/relasi-page.dart';
+import 'package:news/main_page/home/home-page.dart';
+import 'package:news/main_page/regional/regional-page.dart';
+import 'package:news/main_page/profile/profile-page.dart';
 
 class BottomNavbar extends StatefulWidget {
   @override
@@ -10,7 +12,7 @@ class BottomNavbar extends StatefulWidget {
 
 class _BottomNavbarState extends State<BottomNavbar> {
   int _selectedIndex = 0;
-  List pages = [HomePage(), ProfilePage()];
+  List pages = [HomePage(), RegionalPage(), RelasiPage(), ProfilePage()];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -60,6 +62,8 @@ class _BottomNavbarState extends State<BottomNavbar> {
         elevation: 0,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.location_on), label: 'Regional'),
+          BottomNavigationBarItem(icon: Icon(Icons.image), label: 'Relasi'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
         ],
         onTap: _onItemTapped,

@@ -53,7 +53,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.blue)),
+                  border: Border.all(color: Colors.blueGrey)),
               child: TextFormField(
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -69,7 +69,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.blue)),
+                  border: Border.all(color: Colors.blueGrey)),
               child: TextFormField(
                 obscureText: true,
                 keyboardType: TextInputType.text,

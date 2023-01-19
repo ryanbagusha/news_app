@@ -15,7 +15,7 @@ class ProfilePage extends StatelessWidget {
               margin: EdgeInsets.only(bottom: 15),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(50)),
-                border: Border.all(color: Colors.blue, width: 1),
+                border: Border.all(color: Colors.blueGrey, width: 1),
               ),
               child: CircleAvatar(
                 radius: 45,
@@ -23,7 +23,7 @@ class ProfilePage extends StatelessWidget {
                 child: Icon(
                   Icons.person,
                   size: 56,
-                  color: Colors.blue,
+                  color: Colors.blueGrey,
                 ),
               ),
             ),
