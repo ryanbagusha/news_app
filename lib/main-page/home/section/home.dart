@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news/config/api.dart';
-import 'package:news/model/berita-model.dart';
+import 'package:news/config/const.dart';
+import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/service.dart';
 
 class HomeSection extends StatefulWidget {
@@ -11,12 +11,12 @@ class HomeSection extends StatefulWidget {
 
 class _HomeSectionState extends State<HomeSection> {
   Service service = Service();
-  late Future<List<BeritaModel>> listData;
+  late Future<List<BeritaModel>> listBerita;
 
   @override
   void initState() {
     super.initState();
-    listData = service.getPostData();
+    listBerita = service.getBerita(1);
     // print(listData);
   }
 
@@ -97,7 +97,7 @@ class _HomeSectionState extends State<HomeSection> {
                     style: TextStyle(fontWeight: FontWeight.w900, fontSize: 18),
                   )),
               FutureBuilder<List<BeritaModel>>(
-                future: listData,
+                future: listBerita,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     List<BeritaModel> data = snapshot.data!;
@@ -153,11 +153,11 @@ class _HomeSectionState extends State<HomeSection> {
                         );
                       },
                     );
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
+                  } else {
+                    return Center(
+                      child: Text('Data Kosong'),
+                    );
                   }
-
-                  return const CircularProgressIndicator();
                 },
               ),
             ],

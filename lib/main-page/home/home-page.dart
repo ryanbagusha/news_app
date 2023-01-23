@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news/main_page/home/section/galeri.dart';
-import 'package:news/main_page/home/section/home.dart';
-import 'package:news/main_page/home/section/internasional.dart';
-import 'package:news/main_page/home/section/nasional.dart';
-import 'package:news/main_page/home/section/peristiwa.dart';
-import 'package:news/main_page/relasi/relasi-page.dart';
+import 'package:news/main-page/home/section/galeri.dart';
+import 'package:news/main-page/home/section/home.dart';
+import 'package:news/main-page/home/section/internasional.dart';
+import 'package:news/main-page/home/section/nasional.dart';
+import 'package:news/main-page/home/section/peristiwa.dart';
+import 'package:news/main-page/relasi/relasi-page.dart';
 
 class HomePage extends StatefulWidget {
   @override

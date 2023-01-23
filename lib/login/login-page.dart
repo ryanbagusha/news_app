@@ -13,6 +13,14 @@ class _LoginPage extends State<LoginPage> {
   Widget build(BuildContext context) {
     // ignore: prefer_const_constructors
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          leading: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Icon(Icons.arrow_back))),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -85,9 +93,8 @@ class _LoginPage extends State<LoginPage> {
               margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
               // padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size.fromHeight(50)
-                ),
+                style:
+                    ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50)),
                 onPressed: () {},
                 child: Text('Masuk'),
               ),

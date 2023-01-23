@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:news/main_page/relasi/relasi-page.dart';
-import 'package:news/main_page/home/home-page.dart';
-import 'package:news/main_page/regional/regional-page.dart';
-import 'package:news/main_page/profile/profile-page.dart';
+import 'package:news/main-page/relasi/relasi-page.dart';
+import 'package:news/main-page/home/home-page.dart';
+import 'package:news/main-page/regional/regional-page.dart';
+import 'package:news/main-page/profile/profile-page.dart';
 
 class BottomNavbar extends StatefulWidget {
   @override
