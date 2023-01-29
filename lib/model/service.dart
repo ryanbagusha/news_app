@@ -33,10 +33,25 @@ class Service {
     }
   }
 
-    Future<List<BeritaModel>> getBeritaKategori(int kategori) async {
+  Future<List<BeritaModel>> getBeritaKategori(int kategori) async {
     const params = 'berita/get_berita_kategori.php?id_kategori=';
 
-    final response = await http.get(Uri.parse(url + params + kategori.toString()));
+    final response =
+        await http.get(Uri.parse(url + params + kategori.toString()));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => BeritaModel.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to Load Data');
+    }
+  }
+
+  Future<List<BeritaModel>> getHotNews() async {
+    const params = 'berita/get_hotnews.php';
+
+    final response = await http.get(Uri.parse(url + params));
+    // print(url + params + type.toString());
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

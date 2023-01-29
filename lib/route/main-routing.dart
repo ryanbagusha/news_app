@@ -7,7 +7,9 @@ import 'package:news/main-page/regional/detail-kategori-page.dart';
 import '../main-page/home/home-page.dart';
 
 class MainRouting extends StatelessWidget {
-  const MainRouting({super.key});
+  final bool login;
+
+  const MainRouting({Key? key, required this.login}) : super(key: key);
 
   @override
   Widget build(Object context) {
@@ -18,7 +20,7 @@ class MainRouting extends StatelessWidget {
       initialRoute: '/bottom_navbar',
       routes: {
         '/login': (context) => LoginPage(),
-        '/bottom_navbar': (context) => BottomNavbar(),
+        '/bottom_navbar': (context) => BottomNavbar(login: login),
       },
       theme: ThemeData(
         fontFamily: "Montserrat",

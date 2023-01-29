@@ -1,5 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:news/bottom-navbar/bottom-navbar.dart';
+import 'package:news/config/const.dart';
+import 'package:news/route/main-routing.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -7,7 +13,76 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  FocusNode focusNode = new FocusNode();
+  TextEditingController txtUsername = new TextEditingController();
+  TextEditingController txtPassword = new TextEditingController();
+
+  bool visible = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  _cekLogin() async {
+    setState(() {
+      visible = true;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    var params = "auth/login.php?username=" +
+        txtUsername.text +
+        "&password=" +
+        txtPassword.text;
+
+    try {
+      var res = await http.get(Uri.parse(url + params));
+      if (res.statusCode == 200) {
+        var response = json.decode(res.body);
+        if (response['response_status'] == "OK") {
+          prefs.setBool('login', true);
+          setState(() {
+            visible = false;
+          });
+
+          // Navigator.of(context).pushNamedAndRemoveUntil(
+          //     '/bottom_navbar', (Route<dynamic> route) => false);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const MainRouting(login: true)),
+          );
+        } else {
+          setState(() {
+            visible = false;
+          });
+
+          _showAlertDialog(context, response['response_message']);
+        }
+      }
+    } catch (e) {
+      _showAlertDialog(context, e.toString());
+    }
+  }
+
+  _showAlertDialog(BuildContext context, String err) {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Login'),
+            content: Text(err),
+            icon: Icon(Icons.dangerous_rounded),
+            iconColor: Colors.red,
+            actions: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +138,7 @@ class _LoginPage extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.blueGrey)),
               child: TextFormField(
+                controller: txtUsername,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
                     labelText: 'Username',
@@ -79,6 +155,7 @@ class _LoginPage extends State<LoginPage> {
                   borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: Colors.blueGrey)),
               child: TextFormField(
+                controller: txtPassword,
                 obscureText: true,
                 keyboardType: TextInputType.text,
                 decoration: const InputDecoration(
@@ -95,10 +172,18 @@ class _LoginPage extends State<LoginPage> {
               child: ElevatedButton(
                 style:
                     ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50)),
-                onPressed: () {},
+                onPressed: () {
+                  _cekLogin();
+                },
                 child: Text('Masuk'),
               ),
-            )
+            ),
+            Visibility(
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                visible: visible,
+                child: Container(child: CircularProgressIndicator())),
           ],
         ),
       ),

@@ -27,15 +27,15 @@ class ProfilePage extends StatelessWidget {
                 ),
               ),
             ),
-            Text('Silakan Login Terlebih Dahulu'),
-            Container(
-              margin: EdgeInsets.only(top: 15),
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/login');
-                  },
-                  child: Text('Login')),
-            )
+            Text('Halaman Profile'),
+            // Container(
+            //   margin: EdgeInsets.only(top: 15),
+            //   child: ElevatedButton(
+            //       onPressed: () {
+            //         Navigator.pushNamed(context, '/login');
+            //       },
+            //       child: Text('Login')),
+            // )
           ],
         ),
       ),

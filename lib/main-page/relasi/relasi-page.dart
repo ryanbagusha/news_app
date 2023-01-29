@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:news/config/const.dart';
+import 'package:news/main-page/home/berita/detail-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/service.dart';
 
@@ -35,19 +36,31 @@ class _RelasiPageState extends State<RelasiPage> {
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      ClipRRect(
-                        child: Image.network(
-                          // imageUrl + data[index].media,
-                          imageUrl + data[index].media,
-                          fit: BoxFit.cover,
-                          height: 200,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (ctx) => Detail(
+                            berita: data[index],
+                          ),
                         ),
-                      )
-                    ],
+                      );
+                    },
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        ClipRRect(
+                          child: Image.network(
+                            // imageUrl + data[index].media,
+                            imageUrl + data[index].media,
+                            fit: BoxFit.cover,
+                            height: 200,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
