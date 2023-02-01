@@ -4,6 +4,9 @@ import 'package:news/config/const.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:http/http.dart' as http;
 import 'package:news/model/kategori/kategori-model.dart';
+import 'package:news/model/role/role-model.dart';
+import 'package:news/model/tag/tag-model.dart';
+import 'package:news/model/user/user-model.dart';
 
 class Service {
   Future<List<BeritaModel>> getBerita(int type) async {
@@ -56,6 +59,45 @@ class Service {
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((data) => BeritaModel.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to Load Data');
+    }
+  }
+
+  Future<List<TagModel>> getTag() async {
+    const params = 'tag/get_all_tag.php';
+
+    final response = await http.get(Uri.parse(url + params));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => TagModel.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to Load Data');
+    }
+  }
+  
+  Future<List<RoleModel>> getRole() async {
+    const params = 'role/get_all_role.php';
+
+    final response = await http.get(Uri.parse(url + params));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => RoleModel.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to Load Data');
+    }
+  }
+
+  Future<List<UserModel>> getUser() async {
+    const params = 'user/get_all_user.php';
+
+    final response = await http.get(Uri.parse(url + params));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => UserModel.fromJson(data)).toList();
     } else {
       throw Exception('Failed to Load Data');
     }

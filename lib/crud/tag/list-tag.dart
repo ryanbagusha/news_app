@@ -7,20 +7,21 @@ import 'package:news/main-page/regional/detail-kategori-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/service.dart';
+import 'package:news/model/tag/tag-model.dart';
 
-class ListBeritaPage extends StatefulWidget {
+class ListTagPage extends StatefulWidget {
   @override
-  State<ListBeritaPage> createState() => _ListBeritaPageState();
+  State<ListTagPage> createState() => _ListTagPageState();
 }
 
-class _ListBeritaPageState extends State<ListBeritaPage> {
+class _ListTagPageState extends State<ListTagPage> {
   Service service = Service();
-  late Future<List<BeritaModel>> listBerita;
+  late Future<List<TagModel>> list;
 
   @override
   void initState() {
     super.initState();
-    listBerita = service.getBerita(1);
+    list = service.getTag();
     // print(listData);
   }
 
@@ -30,22 +31,22 @@ class _ListBeritaPageState extends State<ListBeritaPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff00579c),
-        title: Text("List Berita"),
+        title: Text("List Tag"),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "add data berita",
         onPressed: () {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new AddBeritaPage()));
+          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          //     builder: (BuildContext context) => new AddBeritaPage()));
         },
         backgroundColor: Color(0xff00579c),
         child: Icon(Icons.add),
       ),
-      body: FutureBuilder<List<BeritaModel>>(
-        future: listBerita,
+      body: FutureBuilder<List<TagModel>>(
+        future: list,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            List<BeritaModel> data = snapshot.data!;
+            List<TagModel> data = snapshot.data!;
             return ListView.builder(
               shrinkWrap: true,
               itemCount: data.length,
@@ -78,12 +79,8 @@ class _ListBeritaPageState extends State<ListBeritaPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(bottom: 8),
-                          child: Text(data[index].judul,
+                          child: Text(data[index].nama,
                               style: TextStyle(fontWeight: FontWeight.bold)),
-                        ),
-                        Text(
-                          data[index].tanggal,
-                          style: TextStyle(fontSize: 11, color: Colors.grey),
                         )
                       ],
                     ),

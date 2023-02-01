@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:news/bottom-navbar/bottom-navbar.dart';
 import 'package:news/crud/berita/list-berita.dart';
+import 'package:news/crud/galeri/list-galeri.dart';
+import 'package:news/crud/kategori/list-kategori.dart';
+import 'package:news/crud/persitiwa/list-peristiwa.dart';
+import 'package:news/crud/role/list-role.dart';
+import 'package:news/crud/tag/list-tag.dart';
+import 'package:news/crud/user/list-user.dart';
 import 'package:news/login/login-page.dart';
 import 'package:news/main-page/profile/profile-page.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
@@ -23,8 +29,12 @@ class MainRouting extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/bottom_navbar': (context) => BottomNavbar(login: login),
         '/list-berita': (context) => ListBeritaPage(),
-        // '/list-peristiwa': (context) => Berita(type: 'peristiwa'),
-        // '/list-galeri': (context) => Berita(type: 'galeri'),
+        '/list-peristiwa': (context) => ListPeristiwaPage(),
+        '/list-galeri': (context) => ListGaleriPage(),
+        '/list-kategori': (context) => ListKategoriPage(),
+        '/list-tag': (context) => ListTagPage(),
+        '/list-role': (context) => ListRolePage(),
+        '/list-user': (context) => ListUserPage(),
       },
       theme: ThemeData(
         fontFamily: "Montserrat",

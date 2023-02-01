@@ -8,19 +8,19 @@ import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/service.dart';
 
-class ListBeritaPage extends StatefulWidget {
+class ListGaleriPage extends StatefulWidget {
   @override
-  State<ListBeritaPage> createState() => _ListBeritaPageState();
+  State<ListGaleriPage> createState() => _ListGaleriPageState();
 }
 
-class _ListBeritaPageState extends State<ListBeritaPage> {
+class _ListGaleriPageState extends State<ListGaleriPage> {
   Service service = Service();
-  late Future<List<BeritaModel>> listBerita;
+  late Future<List<BeritaModel>> list;
 
   @override
   void initState() {
     super.initState();
-    listBerita = service.getBerita(1);
+    list = service.getBerita(3);
     // print(listData);
   }
 
@@ -30,19 +30,19 @@ class _ListBeritaPageState extends State<ListBeritaPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff00579c),
-        title: Text("List Berita"),
+        title: Text("List Galeri"),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "add data berita",
         onPressed: () {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new AddBeritaPage()));
+          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          //     builder: (BuildContext context) => new AddBeritaPage()));
         },
         backgroundColor: Color(0xff00579c),
         child: Icon(Icons.add),
       ),
       body: FutureBuilder<List<BeritaModel>>(
-        future: listBerita,
+        future: list,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             List<BeritaModel> data = snapshot.data!;
