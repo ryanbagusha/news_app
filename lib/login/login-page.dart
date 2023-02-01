@@ -38,7 +38,14 @@ class _LoginPage extends State<LoginPage> {
       if (res.statusCode == 200) {
         var response = json.decode(res.body);
         if (response['response_status'] == "OK") {
+          // print(response);
+          // print(response['data'][0]['nama']);
+          var data = response['data'][0];
           prefs.setBool('login', true);
+          prefs.setString('nama', data['nama']);
+          prefs.setString('email', data['email']);
+          prefs.setString('username', data['username']);
+          prefs.setString('id_role', data['id_role']);
           setState(() {
             visible = false;
           });

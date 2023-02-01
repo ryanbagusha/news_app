@@ -7,7 +7,5 @@ Future<void> main() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var login = prefs.getBool('login') ?? false;
   // print(login);
-  runApp(MainRouting(
-    login: login,
-  ));
+  runApp(MainRouting(login: login,));
 }

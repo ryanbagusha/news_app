@@ -78,6 +78,10 @@ class _BottomNavbarState extends State<BottomNavbar> {
                                   SharedPreferences prefs =
                                       await SharedPreferences.getInstance();
                                   prefs.remove('login');
+                                  prefs.remove('nama');
+                                  prefs.remove('email');
+                                  prefs.remove('username');
+                                  prefs.remove('id_role');
                                   // ignore: use_build_context_synchronously
                                   Navigator.push(
                                     context,

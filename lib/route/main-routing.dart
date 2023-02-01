@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/bottom-navbar/bottom-navbar.dart';
+import 'package:news/crud/berita/list-berita.dart';
 import 'package:news/login/login-page.dart';
 import 'package:news/main-page/profile/profile-page.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
@@ -21,6 +22,9 @@ class MainRouting extends StatelessWidget {
       routes: {
         '/login': (context) => LoginPage(),
         '/bottom_navbar': (context) => BottomNavbar(login: login),
+        '/list-berita': (context) => ListBeritaPage(),
+        // '/list-peristiwa': (context) => Berita(type: 'peristiwa'),
+        // '/list-galeri': (context) => Berita(type: 'galeri'),
       },
       theme: ThemeData(
         fontFamily: "Montserrat",
