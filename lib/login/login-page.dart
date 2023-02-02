@@ -143,7 +143,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.blueGrey)),
+                  border: Border.all(color: Color(0xff00579c))),
               child: TextFormField(
                 controller: txtUsername,
                 keyboardType: TextInputType.text,
@@ -160,7 +160,7 @@ class _LoginPage extends State<LoginPage> {
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  border: Border.all(color: Colors.blueGrey)),
+                  border: Border.all(color: Color(0xff00579c))),
               child: TextFormField(
                 controller: txtPassword,
                 obscureText: true,
@@ -178,7 +178,7 @@ class _LoginPage extends State<LoginPage> {
               // padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               child: ElevatedButton(
                 style:
-                    ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50)),
+                    ElevatedButton.styleFrom(minimumSize: Size.fromHeight(50), backgroundColor: Color(0xff00579c)),
                 onPressed: () {
                   _cekLogin();
                 },
