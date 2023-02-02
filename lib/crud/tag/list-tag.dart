@@ -8,6 +8,7 @@ import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/service.dart';
 import 'package:news/model/tag/tag-model.dart';
+import 'package:http/http.dart' as http;
 
 class ListTagPage extends StatefulWidget {
   @override
@@ -17,6 +18,26 @@ class ListTagPage extends StatefulWidget {
 class _ListTagPageState extends State<ListTagPage> {
   Service service = Service();
   late Future<List<TagModel>> list;
+
+  void deleteData(id) async {
+    var params = "tag/delete_tag.php";
+    await http.post(Uri.parse(url + params), body: {'id': id});
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      return ListTagPage();
+    }));
+    _deleteData(context, "Data berhasil dihapus");
+  }
+
+  void _deleteData(BuildContext context, String error) {
+    final scaffold = ScaffoldMessenger.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        content: Text(error),
+        action: SnackBarAction(
+            label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
+      ),
+    );
+  }
 
   @override
   void initState() {
@@ -63,7 +84,34 @@ class _ListTagPageState extends State<ListTagPage> {
                         label: 'Edit',
                       ),
                       SlidableAction(
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Hapus'),
+                                  content: Text(
+                                      'Apakah anda yakin ingin menghapus ' +
+                                          data[index].nama +
+                                          '?'),
+                                  icon: Icon(Icons.warning),
+                                  iconColor: Colors.red,
+                                  actions: [
+                                    TextButton(
+                                        onPressed: () {
+                                          deleteData(data[index].id);
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Ok')),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Batal'))
+                                  ],
+                                );
+                              });
+                        },
                         backgroundColor: Colors.red,
                         foregroundColor: Colors.white,
                         icon: Icons.delete,
