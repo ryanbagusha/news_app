@@ -57,8 +57,8 @@ class _ListUserPageState extends State<ListUserPage> {
       floatingActionButton: FloatingActionButton(
         heroTag: "add data user",
         onPressed: () {
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(
-              builder: (BuildContext context) => new AddBeritaPage()));
+          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
+          //     builder: (BuildContext context) => new AddU()));
         },
         backgroundColor: Color(0xff00579c),
         child: Icon(Icons.add),
