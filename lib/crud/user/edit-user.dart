@@ -9,31 +9,36 @@ import 'package:news/model/role/role-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/service.dart';
 import 'package:http/http.dart' as http;
+import 'package:news/model/user/user-model.dart';
 
-class AddUserPage extends StatefulWidget {
+class EditUserPage extends StatefulWidget {
+  final UserModel user;
+
+  const EditUserPage({Key? key, required this.user}) : super(key: key);
   @override
-  State<AddUserPage> createState() => _AddUserPageState();
+  State<EditUserPage> createState() => _EditUserPageState();
 }
 
-class _AddUserPageState extends State<AddUserPage> {
+class _EditUserPageState extends State<EditUserPage> {
   Service service = Service();
   late Future<List<RoleModel>> role;
 
   TextEditingController txtNama = TextEditingController();
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtUsername = TextEditingController();
-  TextEditingController txtPassword = TextEditingController();
+  TextEditingController? txtPassword = TextEditingController();
 
   String? selectedRole = null;
 
   void addData() async {
-    var params = "user/add_user.php";
+    var params = "user/edit_user.php";
 
     http.post(Uri.parse(url + params), body: {
+      "id": widget.user.id,
       "nama": txtNama.text,
       "email": txtEmail.text,
       "username": txtUsername.text,
-      "password": txtPassword.text,
+      "password": txtPassword?.text,
       "role": selectedRole,
     });
   }
@@ -53,6 +58,12 @@ class _AddUserPageState extends State<AddUserPage> {
   void initState() {
     super.initState();
     role = service.getRole();
+
+    txtNama = new TextEditingController(text: widget.user.nama);
+    txtEmail = new TextEditingController(text: widget.user.email);
+    txtUsername = new TextEditingController(text: widget.user.username);
+    selectedRole = widget.user.idRole.toString();
+
     // print(role);
   }
 
@@ -62,7 +73,7 @@ class _AddUserPageState extends State<AddUserPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF00579C),
-        title: Text("Tambah User"),
+        title: Text("Edit User"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -106,14 +117,9 @@ class _AddUserPageState extends State<AddUserPage> {
                 TextFormField(
                   controller: txtPassword,
                   obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Empty value";
-                    }
-                  },
                   style: TextStyle(fontSize: 15),
                   decoration: InputDecoration(
-                      hintText: "Password", labelText: "Password"),
+                      hintText: "Kosongkan password jika tidak berubah", labelText: "Password"),
                 ),
                 FutureBuilder<List<RoleModel>>(
                   future: role,
@@ -133,7 +139,8 @@ class _AddUserPageState extends State<AddUserPage> {
                         });
                       },
                       isExpanded: true,
-                      style: TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
                     );
                   },
                 ),
@@ -154,7 +161,7 @@ class _AddUserPageState extends State<AddUserPage> {
                             }));
                           },
                           child: Text(
-                            "Tambah Data",
+                            "Edit Data",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(

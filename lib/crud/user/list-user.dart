@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:news/config/const.dart';
 import 'package:news/crud/berita/add-berita.dart';
+import 'package:news/crud/user/add-user.dart';
+import 'package:news/crud/user/edit-user.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
@@ -57,8 +59,8 @@ class _ListUserPageState extends State<ListUserPage> {
       floatingActionButton: FloatingActionButton(
         heroTag: "add data user",
         onPressed: () {
-          // Navigator.of(context).pushReplacement(new MaterialPageRoute(
-          //     builder: (BuildContext context) => new AddU()));
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(
+              builder: (BuildContext context) => new AddUserPage()));
         },
         backgroundColor: Color(0xff00579c),
         child: Icon(Icons.add),
@@ -77,7 +79,16 @@ class _ListUserPageState extends State<ListUserPage> {
                     motion: ScrollMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (context) {},
+                        onPressed: (context) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (ctx) => EditUserPage(
+                                user: data[index],
+                              ),
+                            ),
+                          );
+                        },
                         backgroundColor: Color(0xff00579c),
                         foregroundColor: Colors.white,
                         icon: Icons.edit,
