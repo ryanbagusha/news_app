@@ -4,6 +4,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:news/config/const.dart';
 import 'package:news/crud/berita/list-berita.dart';
+import 'package:news/crud/galeri/list-galeri.dart';
+import 'package:news/crud/peristiwa/list-peristiwa.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
@@ -12,15 +14,12 @@ import 'package:http/http.dart' as http;
 import 'package:news/model/tag/tag-model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditBeritaPage extends StatefulWidget {
-  final BeritaModel berita;
-
-  const EditBeritaPage({Key? key, required this.berita}) : super(key: key);
+class AddPeristiwaPage extends StatefulWidget {
   @override
-  State<EditBeritaPage> createState() => _EditBeritaPageState();
+  State<AddPeristiwaPage> createState() => _AddPeristiwaPageState();
 }
 
-class _EditBeritaPageState extends State<EditBeritaPage> {
+class _AddPeristiwaPageState extends State<AddPeristiwaPage> {
   Service service = Service();
   late Future<List<TagModel>> tag;
   late Future<List<KategoriModel>> kategori;
@@ -33,17 +32,27 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
   String? selectedKategori = null;
   String? selectedTag = null;
 
-  void editData() async {
-    var params = "berita/edit_berita.php";
+  String? user = null;
+  String? type = '2';
+
+  void addData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      user = prefs.getString('id') ?? '';
+    });
+
+    var params = "berita/add_berita.php";
 
     http.post(Uri.parse(url + params), body: {
-      "id": widget.berita.id,
       "judul": txtJudul.text,
       "tanggal": txtTanggal.text,
       "isi": txtIsi.text,
       "media": '-',
+      "total_view": '0',
       "kategori": selectedKategori,
       "tag": selectedTag,
+      "type": type,
+      "user": user,
     });
   }
 
@@ -63,13 +72,6 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
     super.initState();
     tag = service.getTag();
     kategori = service.getKategoriData();
-
-    txtJudul = new TextEditingController(text: widget.berita.judul);
-    txtTanggal = new TextEditingController(text: widget.berita.tanggal);
-    txtIsi = new TextEditingController(text: widget.berita.isi);
-    // imageMedia = new TextEditingController(text: widget.berita.media);
-    selectedTag = widget.berita.tag.toString();
-    selectedKategori = widget.berita.kategori.toString();
   }
 
   @override
@@ -78,7 +80,7 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff00579c),
-        title: Text("Edit Berita"),
+        title: Text("Tambah Peristiwa"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -196,14 +198,14 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
-                            editData();
+                            addData();
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        ListBeritaPage()));
+                                        ListPeristiwaPage()));
                           },
                           child: Text(
-                            "Ubah",
+                            "Tambah",
                             style: TextStyle(color: Colors.white),
                           ),
                           style: ElevatedButton.styleFrom(

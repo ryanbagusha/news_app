@@ -42,6 +42,7 @@ class _LoginPage extends State<LoginPage> {
           // print(response['data'][0]['nama']);
           var data = response['data'][0];
           prefs.setBool('login', true);
+          prefs.setString('id', data['id']);
           prefs.setString('nama', data['nama']);
           prefs.setString('email', data['email']);
           prefs.setString('username', data['username']);

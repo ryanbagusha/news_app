@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:news/config/const.dart';
 import 'package:news/crud/berita/list-berita.dart';
+import 'package:news/crud/galeri/list-galeri.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
@@ -12,15 +13,15 @@ import 'package:http/http.dart' as http;
 import 'package:news/model/tag/tag-model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class EditBeritaPage extends StatefulWidget {
+class EditGaleriPage extends StatefulWidget {
   final BeritaModel berita;
 
-  const EditBeritaPage({Key? key, required this.berita}) : super(key: key);
+  const EditGaleriPage({Key? key, required this.berita}) : super(key: key);
   @override
-  State<EditBeritaPage> createState() => _EditBeritaPageState();
+  State<EditGaleriPage> createState() => _EditGaleriPageState();
 }
 
-class _EditBeritaPageState extends State<EditBeritaPage> {
+class _EditGaleriPageState extends State<EditGaleriPage> {
   Service service = Service();
   late Future<List<TagModel>> tag;
   late Future<List<KategoriModel>> kategori;
@@ -78,7 +79,7 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff00579c),
-        title: Text("Edit Berita"),
+        title: Text("Edit Galeri"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -200,7 +201,7 @@ class _EditBeritaPageState extends State<EditBeritaPage> {
                             Navigator.of(context).pushReplacement(
                                 MaterialPageRoute(
                                     builder: (BuildContext context) =>
-                                        ListBeritaPage()));
+                                        ListGaleriPage()));
                           },
                           child: Text(
                             "Ubah",

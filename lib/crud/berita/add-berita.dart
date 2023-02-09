@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 import 'package:news/config/const.dart';
+import 'package:news/crud/berita/list-berita.dart';
 import 'package:news/main-page/regional/detail-kategori-page.dart';
 import 'package:news/model/berita/berita-model.dart';
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/service.dart';
+import 'package:http/http.dart' as http;
+import 'package:news/model/tag/tag-model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddBeritaPage extends StatefulWidget {
   @override
@@ -14,23 +18,41 @@ class AddBeritaPage extends StatefulWidget {
 }
 
 class _AddBeritaPageState extends State<AddBeritaPage> {
+  Service service = Service();
+  late Future<List<TagModel>> tag;
+  late Future<List<KategoriModel>> kategori;
+
   TextEditingController txtJudul = TextEditingController();
   TextEditingController txtTanggal = TextEditingController();
   TextEditingController txtIsi = TextEditingController();
-  TextEditingController imageMedia = TextEditingController();
-  TextEditingController selectKategori = TextEditingController();
-  TextEditingController selectTag = TextEditingController();
+  // TextEditingController imageMedia = TextEditingController();
 
-  // void addData() {
-  //   var url = "http://10.0.2.2/my_store/adddata.php";
+  String? selectedKategori = null;
+  String? selectedTag = null;
 
-  //   http.post(url, body: {
-  //     "itemcode": txtJudul.text,
-  //     "itemname": txtTanggal.text,
-  //     "price": txtIsi.text,
-  //     "stock": imageMedia.text
-  //   });
-  // }
+  String? user = null;
+  String? type = '1';
+
+  void addData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      user = prefs.getString('id') ?? '';
+    });
+
+    var params = "berita/add_berita.php";
+
+    http.post(Uri.parse(url + params), body: {
+      "judul": txtJudul.text,
+      "tanggal": txtTanggal.text,
+      "isi": txtIsi.text,
+      "media": '-',
+      "total_view": '0',
+      "kategori": selectedKategori,
+      "tag": selectedTag,
+      "type": type,
+      "user": user,
+    });
+  }
 
   void error(BuildContext context, String error) {
     final scaffold = ScaffoldMessenger.of(context);
@@ -41,6 +63,13 @@ class _AddBeritaPageState extends State<AddBeritaPage> {
             label: 'OK', onPressed: scaffold.hideCurrentSnackBar),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    tag = service.getTag();
+    kategori = service.getKategoriData();
   }
 
   @override
@@ -96,30 +125,67 @@ class _AddBeritaPageState extends State<AddBeritaPage> {
                     }
                   },
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  child: TextFormField(
-                    minLines:
-                        6, // any number you need (It works as the rows for the textarea)
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null,
-                    controller: txtIsi,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "Empty value";
-                      }
-                    },
-                    style: TextStyle(fontSize: 15),
-                    decoration:
-                        InputDecoration.collapsed(hintText: "Isi Berita"),
-                  ),
+                TextFormField(
+                  controller: txtIsi,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return "Empty value";
+                    }
+                  },
+                  style: TextStyle(fontSize: 15),
+                  decoration:
+                      InputDecoration(hintText: "Isi", labelText: "Isi"),
+                  maxLines: null,
+                  minLines: 6,
+                  keyboardType: TextInputType.multiline,
+                  textAlignVertical: TextAlignVertical.top,
                 ),
-                // TextFormField(
-                //   controller: imageMedia,
-                //   style: TextStyle(fontSize: 15),
-                //   decoration:
-                //       InputDecoration(hintText: "Stock", labelText: "Stock"),
-                // ),
+                FutureBuilder<List<TagModel>>(
+                  future: tag,
+                  builder: (context, snapshot) {
+                    return DropdownButton<String>(
+                      hint: Text("Pilih Tag"),
+                      value: selectedTag,
+                      items: snapshot.data
+                          ?.map((fc) => DropdownMenuItem<String>(
+                                child: Text(fc.nama),
+                                value: fc.id,
+                              ))
+                          .toList(),
+                      onChanged: (Object? value) {
+                        setState(() {
+                          selectedTag = value.toString();
+                        });
+                      },
+                      isExpanded: true,
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+                    );
+                  },
+                ),
+                FutureBuilder<List<KategoriModel>>(
+                  future: kategori,
+                  builder: (context, snapshot) {
+                    return DropdownButton<String>(
+                      hint: Text("Pilih Kategori"),
+                      value: selectedKategori,
+                      items: snapshot.data
+                          ?.map((fc) => DropdownMenuItem<String>(
+                                child: Text(fc.nama),
+                                value: fc.id,
+                              ))
+                          .toList(),
+                      onChanged: (Object? value) {
+                        setState(() {
+                          selectedKategori = value.toString();
+                        });
+                      },
+                      isExpanded: true,
+                      style:
+                          TextStyle(fontSize: 14.0, fontFamily: 'Montserrat'),
+                    );
+                  },
+                ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                 ),
@@ -130,62 +196,18 @@ class _AddBeritaPageState extends State<AddBeritaPage> {
                       width: double.infinity,
                       child: ElevatedButton(
                           onPressed: () {
-                            if (txtJudul.value.text.isEmpty) {
-                              setState(() {
-                                error(context, "ID tidak boleh kosong");
-                              }); //ID gabole kosong
-                            } else if (txtJudul.value.text
-                                .contains(RegExp(r'[a-zA-Z]'))) {
-                              setState(() {
-                                error(context, "ID harus angka");
-                                error(context, "Isi data dengan benar!");
-                              }); //id harus angka
-                            } else if (txtJudul.value.text.length != 3) {
-                              setState(() {
-                                error(context, "ID harus berisi 3 angka");
-                                error(context, "Isi data dengan benar!");
-                              }); //id harus 3 angka
-                            } else if (txtTanggal.value.text.isEmpty) {
-                              setState(() {
-                                error(context, "Nama item tidak boleh kosong");
-                                error(context, "Isi data dengan benar!");
-                              }); //nama ga bole kosong
-                            } else if (txtTanggal.value.text.length < 5) {
-                              error(context,
-                                  "Nama item minimal harus 5 karakter");
-                              error(context, "Isi data dengan benar!");
-                              //nama gaboleh kurang dari 5
-                            } else if (txtIsi.value.text.isEmpty) {
-                              setState(() {
-                                error(context, "Harga tidak boleh kosong");
-                                error(context, "Isi data dengan benar!");
-                              }); //harga gabole kosong
-                            } else if (txtIsi.value.text
-                                .contains(RegExp(r'[a-zA-Z]'))) {
-                              setState(() {
-                                error(context, "Isi hanya dengan angka");
-                                error(context, "Isi data dengan benar!");
-                              }); //harga harus angka
-                            } else if (txtIsi.value.text.length < 4) {
-                              setState(() {
-                                error(context, "Harga tidak sesuai format");
-                                error(context, "Isi data dengan benar!");
-                              }); //harga harus minimal 4 karakter
-                            } else {
-                              // addData();
-                              // Navigator.pushReplacement(context,
-                              //     MaterialPageRoute(builder: (context) {
-                              //   return Home();
-                              // }));
-                            }
-
-                            // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            //     builder: (BuildContext context) => Home()));
+                            addData();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (BuildContext context) =>
+                                        ListBeritaPage()));
                           },
                           child: Text(
-                            "Add Data",
+                            "Tambah",
                             style: TextStyle(color: Colors.white),
-                          )),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff00579c))),
                     )
                   ],
                 ),
