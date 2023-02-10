@@ -45,6 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'route': '/list-peristiwa'
         },
         {'icon': Icons.photo, 'title': 'Galeri', 'route': '/list-galeri'},
+        {'icon': Icons.comment, 'title': 'Komentar', 'route': '/list-komentar'},
       ];
     } else {
       return [
@@ -55,6 +56,7 @@ class _ProfilePageState extends State<ProfilePage> {
           'route': '/list-peristiwa'
         },
         {'icon': Icons.photo, 'title': 'Galeri', 'route': '/list-galeri'},
+        {'icon': Icons.comment, 'title': 'Komentar', 'route': '/list-komentar'},
       ];
     }
   }
