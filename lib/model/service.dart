@@ -5,6 +5,7 @@ import 'package:news/model/berita/berita-model.dart';
 import 'package:http/http.dart' as http;
 import 'package:news/model/kategori/kategori-model.dart';
 import 'package:news/model/komentar/komentar-model.dart';
+import 'package:news/model/role/laporan-model.dart';
 import 'package:news/model/role/role-model.dart';
 import 'package:news/model/tag/tag-model.dart';
 import 'package:news/model/user/user-model.dart';
@@ -112,6 +113,19 @@ class Service {
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse.map((data) => KomentarModel.fromJson(data)).toList();
+    } else {
+      throw Exception('Failed to Load Data');
+    }
+  }
+
+    Future<List<LaporanModel>> getLaporan() async {
+    const params = 'role/get_laporan.php';
+
+    final response = await http.get(Uri.parse(url + params));
+
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse.map((data) => LaporanModel.fromJson(data)).toList();
     } else {
       throw Exception('Failed to Load Data');
     }

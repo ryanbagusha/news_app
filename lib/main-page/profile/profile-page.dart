@@ -47,6 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
         },
         {'icon': Icons.photo, 'title': 'Galeri', 'route': '/list-galeri'},
         {'icon': Icons.comment, 'title': 'Komentar', 'route': '/list-komentar'},
+        {'icon': Icons.print, 'title': 'Laporan', 'route': '/list-laporan'},
       ];
     } else {
       return [

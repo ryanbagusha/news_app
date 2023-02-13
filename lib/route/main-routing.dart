@@ -4,6 +4,7 @@ import 'package:news/crud/berita/list-berita.dart';
 import 'package:news/crud/galeri/list-galeri.dart';
 import 'package:news/crud/kategori/list-kategori.dart';
 import 'package:news/crud/komentar/list-komentar.dart';
+import 'package:news/crud/laporan/list-laporan.dart';
 import 'package:news/crud/peristiwa/list-peristiwa.dart';
 import 'package:news/crud/role/list-role.dart';
 import 'package:news/crud/tag/list-tag.dart';
@@ -39,6 +40,7 @@ class MainRouting extends StatelessWidget {
         '/list-user': (context) => ListUserPage(),
         '/list-komentar': (context) => ListKomentarPage(),
         '/list-tarif': (context) => ListTarifPage(),
+        '/list-laporan': (context) => ListLaporanPage(),
       },
       theme: ThemeData(
         fontFamily: "Montserrat",
