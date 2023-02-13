@@ -7,6 +7,7 @@ import 'package:news/crud/komentar/list-komentar.dart';
 import 'package:news/crud/peristiwa/list-peristiwa.dart';
 import 'package:news/crud/role/list-role.dart';
 import 'package:news/crud/tag/list-tag.dart';
+import 'package:news/crud/tarif/list-tarif.dart';
 import 'package:news/crud/user/list-user.dart';
 import 'package:news/login/login-page.dart';
 import 'package:news/main-page/profile/profile-page.dart';
@@ -37,6 +38,7 @@ class MainRouting extends StatelessWidget {
         '/list-role': (context) => ListRolePage(),
         '/list-user': (context) => ListUserPage(),
         '/list-komentar': (context) => ListKomentarPage(),
+        '/list-tarif': (context) => ListTarifPage(),
       },
       theme: ThemeData(
         fontFamily: "Montserrat",

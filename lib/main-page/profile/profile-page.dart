@@ -32,6 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return [
         {'icon': Icons.group, 'title': 'User', 'route': '/list-user'},
         {'icon': Icons.lock, 'title': 'Role', 'route': '/list-role'},
+        {'icon': Icons.monetization_on, 'title': 'Tarif', 'route': '/list-tarif'},
         {
           'icon': Icons.dashboard,
           'title': 'Kategori',
